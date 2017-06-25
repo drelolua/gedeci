@@ -14,6 +14,6 @@ RUN mkdir /root/gedeci-com
 
 EXPOSE 8001
 
-ENTRYPOINT ["/root/gedeci-com/gedeciserver.py"]
+#ENTRYPOINT ["/root/gedeci-com/gedeciserver.py"]
 
 

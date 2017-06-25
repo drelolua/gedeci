@@ -24,7 +24,8 @@ define("log_file_prefix", default="./tornado.log", type=str)
 class Application(tornado.web.Application):
     def __init__(self, **kw):
 
-        mongohost = os.environ['MONGODB_HOST']
+        #mongohost = os.environ['172.17.0.2']
+        mongohost = '172.17.0.2'
         conn = MongoClient(mongohost)
         self.db = conn["lrcgc"]
 
