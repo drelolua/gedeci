@@ -1,0 +1,22 @@
+{% extends ../base.html %}
+
+{% block title %}{{ title  }}{% end %}
+{% block header %}
+    <h2>兔子歌词，歌词也可以这么看。</h2>
+{% end %}
+
+{% block body %}
+<div class="searchwrap">
+
+<div class="search-list">
+    {% if len(lrcs)>0 %}
+        {% for lrc in lrcs %}
+        <div><p class="songname">{{ lrc["songname"] }}<a href="/lrc?lrcid={{ lrc["_id"] }}">查看</a></p></div>
+        {% end %}
+    {% else %}
+        <div><p>没有找到想要的歌词啊， 看看他歌词吧</p></div>
+    {% end %}
+</div>
+</div>
+
+{% end %}

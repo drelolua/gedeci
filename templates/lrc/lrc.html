@@ -1,0 +1,55 @@
+{% extends ../base.html %}
+
+{% block title %}{{ title  }}{% end %}
+{% block header %}
+    <h2>兔子歌词，歌词也可以这么看。</h2>
+{% end %}
+
+{% block body %}
+    {% if len(lrcs) > 0 %}
+    <div class="container theme-showcase">
+    <div class="jumbotron">
+        <h3 class="songname" >{% if title %}{{ title }}{% end %}</h3>
+            {% for line in lrcs %}
+            <p class="line" > {{ line[line.find("]")+1:]  }} </p>
+            {% end %}
+    </div>
+    </div>
+
+
+    <div style="margin: 0px 2.5%">
+        {% if len(commentls) > 0 %}
+            {% for comment in commentls %}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">词友：{{ comment['user'] }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        评论：{{ comment['comm'] }}
+                    </div>
+                </div>
+
+                
+            {% end %}
+        {% else %}
+            <div class="no-comm">
+                <p>没有评论哦~~</p>
+            </div>
+        {% end %}
+    </div>
+    <div class="addcomment">
+        <form action="/addcomm" method="post">
+            <input type="hidden" value="{{ user }}" name="user">
+            <input type="hidden" value="{{ lrcid }}" name="lrcid">
+            <!--<input type="textArea" placeholder="表一表你的感受" name="comm"> -->
+            <textarea name="comm" rows="4" placeholder="表一表你的感受" ></textarea>
+            <input type="submit" value="发表">
+        </form>
+    </div>
+    {% else %}
+    <div class="no-lrc">
+        <h3>没有歌词啊，搜一下试试吧</h3>
+    </div>
+    {% end %}
+{% end %}
