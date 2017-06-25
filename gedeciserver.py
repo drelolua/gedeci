@@ -18,7 +18,8 @@ from handlers import LoginHandler
 from tornado.options import define, options
 
 define("port", default=8001, type=int)
-define("log_file_prefix", default="./tornado.log", type=str)
+file_path = os.path.dirname(os.path.abspath(__file__))
+define("log_file_prefix", default= file_path + "/tornado.log", type=str)
 
 
 class Application(tornado.web.Application):
