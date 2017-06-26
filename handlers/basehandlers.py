@@ -14,12 +14,21 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class LoginHandler(BaseHandler):
     def get(self):
+        '''
         self.write('<html><body><form action="/login" method="post">'
                    'Name: <input type="text" name="name">'
                    '<input type="submit" value="Sign in">'
                    '</form></body></html>')
+        '''
+        self.render("login.html", action="register")
 
     def post(self):
         self.set_secure_cookie("user", self.get_argument("name"))
         self.redirect("/")
 
+class RegisterHandler(BaseHandler):
+    def get(self):
+        self.render("register.html",action="register")
+
+    def post(self):
+        pass

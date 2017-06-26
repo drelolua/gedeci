@@ -15,6 +15,7 @@ from handlers import LrcSearchHandler
 from handlers import CommentHandler
 from handlers import IndexHandler
 from handlers import LoginHandler
+from handlers import RegisterHandler
 
 from tornado.options import define, options
 
@@ -46,6 +47,7 @@ if __name__ == "__main__":
         handlers = [
             (r"/", IndexHandler),
             (r"/login", LoginHandler),
+            (r"/register", RegisterHandler),
             (r"/lrcsearch", LrcSearchHandler),
             (r"/lrc", LrcHandler),
             (r"/addcomm", CommentHandler),

@@ -1,0 +1,50 @@
+﻿{% extends base.html %}
+
+
+{% block title %}
+            注册
+{% end  %}
+        <!--<meta charset="utf-8"> -->
+
+        <!-- CSS -->
+{% block header %}
+            <link rel="stylesheet" href="{{ static_url("assets/css/reset.css") }}" >
+            <link rel="stylesheet" href="{{ static_url("assets/css/supersized.css") }}" >
+            <link rel="stylesheet" href="{{ static_url("assets/css/style.css") }}" >
+{% end %}
+
+
+{% block body %}
+        <script>
+            $("div.search").hide();
+        </script>
+        <div class="page-container">
+            <h1>注册</h1>
+            <form action="/register" method="post">
+                <input type="text" name="name" class="username" placeholder="用户名">
+                <input type="password" name="password" class="password" placeholder="密码">
+                <input type="password" name="repassword" class="confirm" placeholder="再次确认">
+                <input type="email" name="email" class="email" placeholder="username@example.com">
+                <button type="submit">提交</button>
+                <div class="error"><span>+</span></div>
+            </form>
+            <!--
+            <div class="connect">
+                <p>Or connect with:</p>
+                <p>
+                    <a class="facebook" href=""></a>
+                    <a class="twitter" href=""></a>
+                </p>
+            </div>
+            -->
+        </div>
+		
+        <!-- Javascript -->
+        <script src="{{ static_url("assets/js/jquery-1.8.2.min.js") }}" ></script>
+        <script src="{{ static_url("assets/js/supersized.3.2.7.min.js") }}" ></script>
+        <script src="{{ static_url("assets/js/supersized-init.js") }}" ></script>
+        <script src="{{ static_url("assets/js/scripts.js") }}" ></script>
+
+{% end %}
+
+

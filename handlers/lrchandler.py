@@ -66,9 +66,12 @@ class CommentHandler(tornado.web.RequestHandler):
         user = self.get_argument("user", "unknow user")
         comm = self.get_argument("comm", "no comment")
         db.lrcs.update_one({"_id":obid}, {"$push":{"commentlist":{"user":user,"comm":comm}}})
+        '''
         doc = {
             "user":user,
             "comm":comm,
             "lrcid":lrcid
         }
-        self.write(doc)
+        '''
+        #self.write(doc)
+        self.redirect('/lrc?lrcid='+lrcid)
