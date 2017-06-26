@@ -9,6 +9,7 @@ import tornado.options
 import tornado.web
 from pymongo import MongoClient
 
+
 from handlers import LrcHandler
 from handlers import LrcSearchHandler
 from handlers import CommentHandler
@@ -21,12 +22,16 @@ define("port", default=8001, type=int)
 file_path = os.path.dirname(os.path.abspath(__file__))
 define("log_file_prefix", default= file_path + "/tornado.log", type=str)
 
+import ConfigParser
+cfg = ConfigParser.ConfigParser()
+cfg.read(file_path + "/gedeci.conf")
+
 
 class Application(tornado.web.Application):
     def __init__(self, **kw):
 
         #mongohost = os.environ['172.17.0.2']
-        mongohost = '172.17.0.2'
+        mongohost = cfg.get('mongo', 'host')
         conn = MongoClient(mongohost)
         self.db = conn["lrcgc"]
 
