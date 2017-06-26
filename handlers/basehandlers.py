@@ -1,5 +1,6 @@
 #-*-coding:utf-8-*-
 import tornado.web
+from tornado.log import logging
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -23,7 +24,11 @@ class LoginHandler(BaseHandler):
         self.render("login.html", action="register")
 
     def post(self):
-        self.set_secure_cookie("user", self.get_argument("name"))
+        #self.set_secure_cookie("user", self.get_argument("name"))
+        username = self.get_argument("name")
+        password = self.get_argument("password")
+        #email = self.get_argument("email")
+        logging.info({"username":username,"password":password})
         self.redirect("/")
 
 class RegisterHandler(BaseHandler):
