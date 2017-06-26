@@ -36,8 +36,8 @@ class LrcHandler(BaseHandler):
             return
         db = self.application.db
         lrc = db.lrcs.find_one({"_id":ObjectId(lrcid)})
-        lrcstr = lrc["lrc"].replace(u"歌词千寻", u"兔子歌词")
-        lrcstr = lrcstr.replace("www.lrcgc.com", "www.tuzilrc.com")
+        lrcstr = lrc["lrc"].replace(u"歌词千寻", u"歌的词")
+        lrcstr = lrcstr.replace("www.lrcgc.com", 'www.gedeci.com')
         users = ['朱长杰', '霍建华', '长安花','齐虎亮']
         user = random.choice(users)
         commentls = [
