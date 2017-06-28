@@ -45,7 +45,8 @@ if __name__ == "__main__":
     tornado.options.parse_command_line()
     app = Application(
         handlers = [
-            (r"/", IndexHandler),
+            #(r"/", IndexHandler),
+            (r"/", LrcSearchHandler),
             (r"/login", LoginHandler),
             (r"/register", RegisterHandler),
             (r"/lrcsearch", LrcSearchHandler),
