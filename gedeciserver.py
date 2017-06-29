@@ -39,7 +39,8 @@ class Application(tornado.web.Application):
 
         redishost = cfg.get('mongo', 'host')
         redisport = cfg.get('redis', 'port')
-        r = redis.Redis(redishost,redisport)
+        redisdb = cfg.get('redis', 'db')
+        r = redis.Redis(host=redishost,port=int(redisport),db=int(redisdb))
         self.r = r
 
         tornado.web.Application.__init__(
