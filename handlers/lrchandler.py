@@ -28,7 +28,7 @@ class LrcSearchHandler(BaseHandler):
 
 #class LrcHandler(tornado.web.RequestHandler):
 class LrcHandler(BaseHandler):
-    @tornado.web.authenticated
+    #@tornado.web.authenticated
     def get(self):
         lrcid = self.get_argument("lrcid", False)
         if lrcid == False:
