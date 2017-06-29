@@ -8,12 +8,13 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 from pymongo import MongoClient
+import redis
 
 
 from handlers import LrcHandler
 from handlers import LrcSearchHandler
 from handlers import CommentHandler
-from handlers import IndexHandler
+#from handlers import IndexHandler
 from handlers import LoginHandler
 from handlers import RegisterHandler
 
@@ -36,6 +37,11 @@ class Application(tornado.web.Application):
         conn = MongoClient(mongohost)
         self.db = conn["lrcgc"]
 
+        redishost = cfg.get('mongo', 'host')
+        redisport = cfg.get('redis', 'port')
+        r = redis.Redis(redishost,redisport)
+        self.r = r
+
         tornado.web.Application.__init__(
             self,**kw)
 
@@ -57,6 +63,8 @@ if __name__ == "__main__":
         static_path = os.path.join(os.path.dirname(__file__), "statics"),
         login_url = 'login',
         cookie_secret= "BC1C10EDF976EF60C2B4ABF949812221", # "i want to dream 2005" md5 大写
+        session_secret = "BC1C10EDF976EF60C2B4ABF949812221",
+        session_timeout = 10,
     )
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
