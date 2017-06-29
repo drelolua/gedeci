@@ -9,7 +9,7 @@ RUN apk -U add  bash \
                 openssl-dev \
                 curl curl-dev \
                 py2-pip
-RUN pip install tornado pymongo pycurl simplejson
+RUN pip install tornado pymongo pycurl simplejson redis
 RUN mkdir /root/gedeci-com
 
 EXPOSE 8001
