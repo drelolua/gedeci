@@ -38,7 +38,7 @@ class Application(tornado.web.Application):
         conn = MongoClient(mongohost)
         self.db = conn["lrcgc"]
 
-        redishost = cfg.get('mongo', 'host')
+        redishost = cfg.get('redis', 'host')
         redisport = cfg.get('redis', 'port')
         redisdb = cfg.get('redis', 'db')
         r = redis.Redis(host=redishost,port=int(redisport),db=int(redisdb))
