@@ -17,6 +17,7 @@ from handlers import CommentHandler
 #from handlers import IndexHandler
 from handlers import LoginHandler
 from handlers import RegisterHandler
+from handlers import EchoWebSocket
 
 from tornado.options import define, options
 
@@ -59,6 +60,7 @@ if __name__ == "__main__":
             (r"/lrcsearch", LrcSearchHandler),
             (r"/lrc", LrcHandler),
             (r"/addcomm", CommentHandler),
+            (r"/ws", EchoWebSocket),
         ],
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "statics"),
