@@ -30,4 +30,11 @@
      {% block body %}
      {% end %}
     </body>
+    <script>
+        var ws = new WebSocket('ws://'+document.domain+'/ws');
+        ws.onmessage = function(evt){
+            console.log(console.log(evt.data));
+        }
+        console.log("使用 ws.send('你想要发送的内容') 的方式， 尝试websocket 聊天。");
+    </script>
 </html>
