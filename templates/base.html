@@ -447,7 +447,7 @@ $('.chatroom-send-btn').on('click',
 function(evt) {
     if ($.trim($('.chatroom-input').val())) {
         $('.chatroom-input').trigger('keydown');
-        wx.send($.trim($('.chatroom-input').val()));
+        ws.send($.trim($('.chatroom-input').val()));
         $('.chatroom-item.current').append("<div class='detail'>"+$.trim($('.chatroom-input').val())+"</div>")
     }
 });
