@@ -420,9 +420,25 @@
   background: #ccc;
   transition: all 0.3s;
 }
+.rigth{
+  text-align: right;
+}
+.left{
+  text-align: left;
+}
+.msg{
+  padding: 12px;
+}
+.msg span{
+  line-height: 2.2em;
+    background: #fff;
+    display: inline-block;
+    padding: 0px 15px;
+    border-radius: 5px;
+}
   </style>
     <script>
-        var ws;
+var ws;
 $(".chatroom-info").on('click',
 function(evt) {
     evt.preventDefault();
@@ -434,25 +450,31 @@ function(evt) {
         $('.chatroom-tribes>li').first().addClass('current');
         $('.chatroom-item').first().addClass('current');
         $('.chatroom .count').eq(0).text(0).css('visibility', 'hidden');
-        ws = new WebSocket('ws://' + document.domain + '[表情]');
-
+        ws.close();
     } else {
-        ws = new WebSocket('ws://' + document.domain + '/ws');
-        ws.onmessage = function(evt) {
-          console.log(console.log(evt.data));
-          $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
-        }
         $('.chatroom').removeClass('chatroom-fold');
+        ws = new WebSocket('ws://' + document.domain + '/ws')
+        ws.onmessage = function(evt) {
+          // console.log(console.log(evt.data));
+          $('.chatroom-item.current').append("<div class='msg left'><span>"+evt.data+"</span></div>")
+          $('.chatroom-pannel-bd').scrollTop( $('.chatroom-pannel-bd')[0].scrollHeight )
+        }
     }
 });
+
 $('.chatroom-send-btn').on('click',
 function(evt) {
     if ($.trim($('.chatroom-input').val())) {
         $('.chatroom-input').trigger('keydown');
         ws.send($.trim($('.chatroom-input').val()));
-        $('.chatroom-item.current').append("<div class='detail'>"+$.trim($('.chatroom-input').val())+"</div>")
+        $('.chatroom-item.current').append("<div class='msg rigth'><span>"+$.trim($('.chatroom-input').val())+"</span></div>")
+        $('.chatroom-input').val('');
+        $('.chatroom-pannel-bd').scrollTop( $('.chatroom-pannel-bd')[0].scrollHeight )
     }
 });
+
+
+
 
 
 
