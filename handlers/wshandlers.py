@@ -8,7 +8,7 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
         print("WebSocket opened")
 
     def on_message(self, message):
-        EchoWebSocket.update(u"You said: " + message)
+        EchoWebSocket.update(message)
         #self.write_message(u"You said: " + message)
 
     def on_close(self):
