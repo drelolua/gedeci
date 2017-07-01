@@ -5,6 +5,7 @@
 	<meta name="description" content="歌的词，不只能看歌词，查歌词，还能自己创建歌词，评论歌词!" />
   <meta name="Keywords" content="歌词,发表歌词,求歌词,悬赏歌词" />
     <script type="text/javascript" src="{{ static_url("jquery-1.11.1.min.js") }}"></script>
+    <!-- <script type="text/javascript" src="{{ static_url("gedecichart.js") }}"></script> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">    
     <link href="{{ static_url("lrc.css") }}" rel="stylesheet">
         {% block header %}{% end %}
@@ -421,10 +422,11 @@
 }
   </style>
     <script>
-        $(".chatroom-info").on('click', function (evt) {
-      evt.preventDefault();
-      // $('.chatroom').toggleClass('chatroom-fold');
-      if (!$('.chatroom').hasClass('chatroom-fold')) {
+        var ws;
+$(".chatroom-info").on('click',
+function(evt) {
+    evt.preventDefault();
+    if (!$('.chatroom').hasClass('chatroom-fold')) {
         $('.chatroom').addClass('chatroom-fold');
         $('.chatroom textarea').focus();
         $('.chatroom-tribe').removeClass('current');
@@ -432,19 +434,26 @@
         $('.chatroom-tribes>li').first().addClass('current');
         $('.chatroom-item').first().addClass('current');
         $('.chatroom .count').eq(0).text(0).css('visibility', 'hidden');
-      } else {
+        ws = new WebSocket('ws://' + document.domain + '[表情]');
+    } else {
         $('.chatroom').removeClass('chatroom-fold');
-      }
-    });
-        $('.chatroom-send-btn').on('click', function (evt) {
-          if ($.trim($('.chatroom-input').val())) {
-            $('.chatroom-input').trigger('keydown');
-          }
-        });
-        var ws = new WebSocket('ws://'+document.domain+'/ws');
-        ws.onmessage = function(evt){
-            console.log(console.log(evt.data));
-        }
-        console.log("使用 ws.send('你想要发送的内容') 的方式， 尝试websocket 聊天。");
+    }
+});
+$('.chatroom-send-btn').on('click',
+function(evt) {
+    if ($.trim($('.chatroom-input').val())) {
+        $('.chatroom-input').trigger('keydown');
+        wx.send($.trim($('.chatroom-input').val()));
+        $('.chatroom-item.current').append("<div class='detail'>"+$.trim($('.chatroom-input').val())+"</div>")
+    }
+});
+
+
+
+ws.onmessage = function(evt) {
+    // console.log(console.log(evt.data));
+    $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
+}
+console.log("使用 ws.send('你想要发送的内容') 的方式， 尝试websocket 聊天。");
     </script>
 </html>
