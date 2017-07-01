@@ -1,7 +1,6 @@
 #-*- coding:utf-8 -*-
 
 import tornado.web
-import random
 from bson import ObjectId
 
 from basehandlers import BaseHandler
@@ -38,13 +37,8 @@ class LrcHandler(BaseHandler):
         lrc = db.lrcs.find_one({"_id":ObjectId(lrcid)})
         lrcstr = lrc["lrc"].replace(u"歌词千寻", u"歌的词")
         lrcstr = lrcstr.replace("www.lrcgc.com", 'www.gedeci.com')
-        users = ['朱长杰', '霍建华', '长安花','齐虎亮']
-        user = random.choice(users)
-        commentls = [
-            {"comm":"我曹，好有韵味。", "user":"曹先生"},
-            {"comm":"牛逼，写得好。", "user":"牛先生"}
-        ]
         commentls = lrc.get("commentlist", [])
+        user = self.my_session['user']
         self.render("lrc/lrc.html",
                     lrcid=lrcid,
                     title=lrc["songname"],

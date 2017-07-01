@@ -16,6 +16,7 @@ from handlers import LrcSearchHandler
 from handlers import CommentHandler
 #from handlers import IndexHandler
 from handlers import LoginHandler
+from handlers import LogoutHandler
 from handlers import RegisterHandler
 from handlers import EchoWebSocket
 
@@ -56,6 +57,7 @@ if __name__ == "__main__":
             #(r"/", IndexHandler),
             (r"/", LrcSearchHandler),
             (r"/login", LoginHandler),
+            (r"/logout", LogoutHandler),
             (r"/register", RegisterHandler),
             (r"/lrcsearch", LrcSearchHandler),
             (r"/lrc", LrcHandler),

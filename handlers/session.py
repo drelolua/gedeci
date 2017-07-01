@@ -1,4 +1,5 @@
 #-*-coding:utf-8-*-
+from tornado.log import logging
 from hashlib import sha1
 import os,time
 import cPickle as pickle
@@ -46,9 +47,13 @@ class SessionRedis(Session):
         request.set_cookie(Session.session_id,  self._id)
 
     def __getitem__(self, key):
-       mashed_session =  self.r.get(self._id)
-       session = pickle.loads(mashed_session)
-       return session
+        mashed_session =  self.r.get(self._id)
+        if mashed_session:
+            session = pickle.loads(mashed_session)
+        else:
+            session = {}
+        logging.info(type(session))
+        return session.get(key)
 
     def __setitem__(self, key, value):
         mashed_session =  self.r.get(self._id)

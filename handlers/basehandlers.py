@@ -11,7 +11,16 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         #return self.get_cookie(Session.session_id)
-        return self.get_secure_cookie("user")
+        cook_user = self.get_secure_cookie("user")
+        session_id = self.get_cookie(Session.session_id)
+        logging.info(cook_user)
+        logging.info(session_id)
+        session = self.application.r.get(session_id)
+        logging.info(session)
+        if session:
+            return cook_user
+        else:
+            return None
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -27,11 +36,13 @@ class LoginHandler(BaseHandler):
                    '<input type="submit" value="Sign in">'
                    '</form></body></html>')
         '''
-        self.render("login.html", action="register")
+        logging.info(self.get_argument('next','default'))
+        self.render("login.html", action="register", next=self.get_argument('next', '/'))
 
     def post(self):
         username = self.get_argument("name")
         password = self.get_argument("password")
+        next_url = self.get_argument("next")
         #email = self.get_argument("email")
         logging.info({"username":username,"password":password})
         db = self.application.db
@@ -42,10 +53,19 @@ class LoginHandler(BaseHandler):
             self.my_session['user'] = username
             self.my_session['pwd'] = password
             self.set_secure_cookie("user", self.get_argument("name"))
-            self.redirect("/")
+            self.redirect(next_url)
         else:
             self.redirect('/login')
         #self.set_secure_cookie("__sessionId__", create_session_id())
+
+class LogoutHandler(BaseHandler):
+    def get(self):
+        session_id = self.get_cookie(Session.session_id)
+        if session_id:
+            self.application.r.delete(session_id)
+        self.set_cookie("user", '')
+        self.set_cookie(Session.session_id, '')
+        self.redirect("/")
 
 class RegisterHandler(BaseHandler):
     def get(self):
