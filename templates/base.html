@@ -435,6 +435,10 @@ function(evt) {
         $('.chatroom-item').first().addClass('current');
         $('.chatroom .count').eq(0).text(0).css('visibility', 'hidden');
         ws = new WebSocket('ws://' + document.domain + '[表情]');
+        ws.onmessage = function(evt) {
+        // console.log(console.log(evt.data));
+        $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
+}
     } else {
         $('.chatroom').removeClass('chatroom-fold');
     }
@@ -450,10 +454,7 @@ function(evt) {
 
 
 
-ws.onmessage = function(evt) {
-    // console.log(console.log(evt.data));
-    $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
-}
+
 console.log("使用 ws.send('你想要发送的内容') 的方式， 尝试websocket 聊天。");
     </script>
 </html>
