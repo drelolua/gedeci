@@ -435,12 +435,13 @@ function(evt) {
         $('.chatroom-item').first().addClass('current');
         $('.chatroom .count').eq(0).text(0).css('visibility', 'hidden');
         ws = new WebSocket('ws://' + document.domain + '[表情]');
-        ws.onmessage = function(evt) {
-          // console.log(console.log(evt.data));
-          $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
-        }
+
     } else {
         ws = new WebSocket('ws://' + document.domain + '/ws');
+        ws.onmessage = function(evt) {
+          console.log(console.log(evt.data));
+          $('.chatroom-item.current').append("<div class='detail'>"+evt.data+"</div>")
+        }
         $('.chatroom').removeClass('chatroom-fold');
     }
 });
