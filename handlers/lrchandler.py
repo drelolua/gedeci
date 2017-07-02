@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 
 import tornado.web
+import tornado.escape
 from bson import ObjectId
 
 from basehandlers import BaseHandler
@@ -44,7 +45,8 @@ class LrcHandler(BaseHandler):
                     title=lrc["songname"],
                     lrcs=lrcstr.split("\n"),
                     commentls=commentls,
-                    user = user
+                    user = user,
+                    next_url = tornado.escape.url_escape("/lrc?lrcid="+lrcid)
                     )
 
 class CommentHandler(tornado.web.RequestHandler):
@@ -57,9 +59,19 @@ class CommentHandler(tornado.web.RequestHandler):
         db = self.application.db
         lrcid = self.get_argument("lrcid", False)
         obid = ObjectId(lrcid)
+        comment_id = str(ObjectId())
         user = self.get_argument("user", "unknow user")
         comm = self.get_argument("comm", "no comment")
-        db.lrcs.update_one({"_id":obid}, {"$push":{"commentlist":{"user":user,"comm":comm}}})
+        db.lrcs.update_one(
+                {"_id":obid},
+                {"$push":{
+                    "commentlist":{
+                        "user":user,
+                        "comm":comm,
+                        "id":comment_id
+                    }
+                }}
+            )
         '''
         doc = {
             "user":user,

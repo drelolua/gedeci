@@ -54,7 +54,27 @@
   padding-right: 15px;
   overflow: hidden;
 }
-
+.addcomment{
+  position: relative;
+}
+.addcomment .needlog{
+  position: absolute;
+  top: 15px;
+  left: 30%;
+  right: 30%;
+  bottom: 15px;
+  display: flex;
+  background: rgba(0,0,0,0.1);
+}
+.addcomment .needlog>a{
+  flex: 1;
+  text-align: center;
+  color: #000;
+  line-height: 56px;
+}
+.addcomment .needlog>a:first-child{
+  border-right:3px solid #fff;
+}
 .addcomment textarea{  
     display: block;
     width: 95%;

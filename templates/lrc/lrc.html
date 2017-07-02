@@ -39,11 +39,18 @@
         {% end %}
     </div>
     <div class="addcomment">
+        {% if current_user %}
+        {% else %}
+            <div class="needlog">
+                <a href="/login?next={{ next_url }}">登录</a>
+                <a href="/register">注册</a>
+            </div>
+        {% end %}
         <form action="/addcomm" method="post">
             <input type="hidden" value="{{ user }}" name="user">
             <input type="hidden" value="{{ lrcid }}" name="lrcid">
             <!--<input type="textArea" placeholder="表一表你的感受" name="comm"> -->
-            <textarea name="comm" rows="4" placeholder="表一表你的感受" ></textarea>
+            <textarea name="comm" readonly="readonly" rows="4" placeholder="表一表你的感受" ></textarea>
             <input type="submit" value="发表">
         </form>
     </div>

@@ -1,6 +1,7 @@
 #-*-coding:utf-8-*-
 import tornado.web
 from tornado.log import logging
+from bson import ObjectId
 
 from session import SessionRedis as Session
 
@@ -77,7 +78,8 @@ class RegisterHandler(BaseHandler):
         email = self.get_argument("email")
         db = self.application.db
         user_col = db.users
-        result = user_col.insert_one({"name":username, "password":password, "email":email})
+        user_id = str(ObjectId()) # user_id
+        result = user_col.insert_one({"_id":user_id, "name":username, "password":password, "email":email})
         if result.acknowledged:
             self.redirect("/login")
         else:
