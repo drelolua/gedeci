@@ -81,3 +81,23 @@ class CommentHandler(tornado.web.RequestHandler):
         '''
         #self.write(doc)
         self.redirect('/lrc?lrcid='+lrcid)
+
+
+class AddLrcHandler(BaseHandler):
+    def get(self):
+        self.render('/addlrc.html')
+
+    def post(self):
+        db = self.application.db
+        lrc_content = self.get_argument('content')
+        title = self.get_argument('title')
+        tags = self.get_argument('tags')
+        copyright = self.get_argument('copyright')
+        lrc = dict(
+            title = title,
+            content = lrc_content,
+            tags = tags,
+            copyright = copyright
+        )
+        res = db.lrcs.insert_one(lrc)
+        self.redirect('/lrc?lrcid='+res.id)
